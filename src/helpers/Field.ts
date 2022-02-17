@@ -13,4 +13,4 @@ export const CellState: Record<string, Cell> = {
 export const emptyFieldGenerator = (
   size: number,
   state: Cell = CellState.empty
-): Field => [[]];
+): Field => new Array(size).fill(null).map(() => new Array(size).fill(state));
