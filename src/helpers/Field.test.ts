@@ -32,10 +32,10 @@ describe("Field Generator", () => {
       expect(() => fieldGenerator(1, 2)).toThrow(errorText);
     });
     it("Smallest possible field without mine", () => {
-      expect(emptyFieldGenerator(1, 0)).toStrictEqual([[empty]]);
+      expect(fieldGenerator(1, 0)).toStrictEqual([[empty]]);
     });
     it("Big field without mine", () => {
-      expect(emptyFieldGenerator(10, 0)).toStrictEqual([
+      expect(fieldGenerator(10, 0)).toStrictEqual([
         [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty],
         [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty],
         [empty, empty, empty, empty, empty, empty, empty, empty, empty, empty],
@@ -49,7 +49,7 @@ describe("Field Generator", () => {
       ]);
     });
     it("Smallest possible field with mine", () => {
-      expect(emptyFieldGenerator(1, 1)).toStrictEqual([[bomb]]);
+      expect(fieldGenerator(1, 1)).toStrictEqual([[bomb]]);
     });
   });
 });
