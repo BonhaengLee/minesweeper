@@ -1,5 +1,9 @@
-import { getNeighboursItems, incrementNeighbours } from "./CellsManipulator";
-import { CellState } from "./Field";
+import {
+  getNeighboursItems,
+  checkItemInField,
+  incrementNeighbours,
+} from "./CellsManipulator";
+import { CellState, Field } from "./Field";
 
 const { empty, bomb } = CellState;
 
@@ -19,13 +23,75 @@ describe("Check neighbours selectors", () => {
   it("With [3, 3] coords", () => {
     expect(getNeighboursItems([3, 3])).toStrictEqual({
       top: [2, 3],
-      topRight: [2.4],
+      topRight: [2, 4],
       right: [3, 4],
       rightBottom: [4, 4],
       bottom: [4, 3],
       bottomLeft: [4, 2],
       left: [3, 2],
       leftTop: [2, 2],
+    });
+  });
+});
+
+describe("checkItemInField tests", () => {
+  describe("Simple cases", () => {
+    const field: Field = [[empty]];
+
+    it("Out of y range", () => {
+      expect(checkItemInField([1, 0], field)).toBe(false);
+    });
+
+    it("Out of x range", () => {
+      expect(checkItemInField([0, -1], field)).toBe(false);
+    });
+
+    it("In x and y range", () => {
+      expect(checkItemInField([0, 0], field)).toBe(true);
+    });
+  });
+  describe("Big field", () => {
+    const field: Field = [
+      [empty, empty, empty, empty, empty],
+      [empty, empty, empty, empty, empty],
+      [empty, empty, empty, empty, empty],
+      [empty, empty, empty, empty, empty],
+      [empty, empty, empty, empty, empty],
+    ];
+
+    it("Out of x range", () => {
+      expect(checkItemInField([5, 0], field)).toBe(false);
+    });
+    it("Out of x range with negative index", () => {
+      expect(checkItemInField([-1, 0], field)).toBe(false);
+    });
+    it("Out of y range", () => {
+      expect(checkItemInField([0, 5], field)).toBe(false);
+    });
+    it("In x and y range", () => {
+      expect(checkItemInField([3, 4], field)).toBe(true);
+    });
+  });
+});
+
+describe("Check increment Neibours", () => {
+  describe("Simple cases", () => {
+    it("Field with only one item", () => {
+      expect(incrementNeighbours([0, 0], [[bomb]])).toStrictEqual([[bomb]]);
+    });
+    it("Field 2x2 with one mine", () => {
+      expect(
+        incrementNeighbours(
+          [0, 0],
+          [
+            [bomb, empty],
+            [empty, empty],
+          ]
+        )
+      ).toStrictEqual([
+        [bomb, 1],
+        [1, 1],
+      ]);
     });
   });
 });
