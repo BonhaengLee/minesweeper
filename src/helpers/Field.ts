@@ -25,14 +25,14 @@ export const fieldGenerator = (size: number, probability: number): Field => {
 
   const result: Field = emptyFieldGenerator(size);
 
-  for (let i = 0; i < size; i++) {
-    for (let j = 0; j < size; j++) {
+  for (let y = 0; y < size; y++) {
+    for (let x = 0; x < size; x++) {
       if (restCellsWithBombs === 0) {
         return result; // 지뢰가 다 채워지면 반복문을 빠져나간다.
       }
       // 지뢰가 남아있는 셀을 찾는다.
-      if (restCellsWithBombs / unprocessedCells > 0) {
-        result[i][j] = CellState.bomb;
+      if (restCellsWithBombs / unprocessedCells > Math.random()) {
+        result[y][x] = CellState.bomb;
         restCellsWithBombs--;
       }
       unprocessedCells--;
