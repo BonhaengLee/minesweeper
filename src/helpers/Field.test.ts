@@ -49,7 +49,7 @@ describe("Field Generator", () => {
       ]);
     });
     it("Smallest possible field with mine", () => {
-      expect(emptyFieldGenerator(1, 1)).toStrictEqual([[empty]]);
+      expect(emptyFieldGenerator(1, 1)).toStrictEqual([[bomb]]);
     });
   });
 });

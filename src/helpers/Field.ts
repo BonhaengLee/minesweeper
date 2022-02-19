@@ -20,16 +20,22 @@ export const fieldGenerator = (size: number, density: number): Field => {
     throw new Error("Density must be between 0 and 1");
   }
 
-  const freeCellsCount = size * size;
-  const cellsWithBombs = freeCellsCount * density; // 지뢰 개수는 밀도만큼 주어질 것이다.
+  let unprocessedCells = size * size;
+  let restCellsWithBombs = unprocessedCells * density; // 지뢰 개수는 밀도만큼 주어질 것이다.
 
   const result: Field = emptyFieldGenerator(size);
 
   for (let i = 0; i < size; i++) {
     for (let j = 0; j < size; j++) {
-      if (cellsWithBombs === 0) {
+      if (restCellsWithBombs === 0) {
         return result;
       }
+      // ratio
+      if (restCellsWithBombs / unprocessedCells > 0) {
+        result[i][j] = CellState.bomb;
+        restCellsWithBombs--;
+      }
+      unprocessedCells--;
     }
   }
 
