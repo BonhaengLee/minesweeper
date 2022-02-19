@@ -26,8 +26,8 @@ describe("Field Generator", () => {
     });
   });
   describe("Simple cases", () => {
-    it("Wrong density", () => {
-      const errorText = "Density must be between 0 and 1";
+    it("Wrong probability", () => {
+      const errorText = "Probability must be between 0 and 1";
       expect(() => fieldGenerator(1, -1)).toThrow(errorText);
       expect(() => fieldGenerator(1, 2)).toThrow(errorText);
     });
@@ -50,6 +50,24 @@ describe("Field Generator", () => {
     });
     it("Smallest possible field with mine", () => {
       expect(fieldGenerator(1, 1)).toStrictEqual([[bomb]]);
+    });
+    it("2x2 field with mines", () => {
+      expect(fieldGenerator(2, 1)).toStrictEqual([
+        [bomb, bomb],
+        [bomb, bomb],
+      ]);
+    });
+    it("2x2 field with 50% probability", () => {
+      expect(fieldGenerator(2, 0.5)).toStrictEqual([
+        [bomb, bomb],
+        [empty, empty],
+      ]);
+      expect(fieldGenerator(4, 0.5)).toStrictEqual([
+        [bomb, bomb, bomb, bomb],
+        [bomb, bomb, bomb, bomb],
+        [empty, empty, empty, empty],
+        [empty, empty, empty, empty],
+      ]);
     });
   });
 });

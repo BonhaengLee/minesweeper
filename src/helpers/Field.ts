@@ -15,22 +15,22 @@ export const emptyFieldGenerator = (
   state: Cell = CellState.empty
 ): Field => new Array(size).fill(null).map(() => new Array(size).fill(state));
 
-export const fieldGenerator = (size: number, density: number): Field => {
-  if (density < 0 || density > 1) {
-    throw new Error("Density must be between 0 and 1");
+export const fieldGenerator = (size: number, probability: number): Field => {
+  if (probability < 0 || probability > 1) {
+    throw new Error("Probability must be between 0 and 1");
   }
 
-  let unprocessedCells = size * size;
-  let restCellsWithBombs = unprocessedCells * density; // 지뢰 개수는 밀도만큼 주어질 것이다.
+  let unprocessedCells = size * size; // 처리되지 않은 셀은 총 몇개인지
+  let restCellsWithBombs = unprocessedCells * probability; // 지뢰 개수는 밀도만큼 주어질 것이다.
 
   const result: Field = emptyFieldGenerator(size);
 
   for (let i = 0; i < size; i++) {
     for (let j = 0; j < size; j++) {
       if (restCellsWithBombs === 0) {
-        return result;
+        return result; // 지뢰가 다 채워지면 반복문을 빠져나간다.
       }
-      // ratio
+      // 지뢰가 남아있는 셀을 찾는다.
       if (restCellsWithBombs / unprocessedCells > 0) {
         result[i][j] = CellState.bomb;
         restCellsWithBombs--;
