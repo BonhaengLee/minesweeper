@@ -58,16 +58,17 @@ describe("Field Generator", () => {
       ]);
     });
     it("2x2 field with 50% probability", () => {
-      expect(fieldGenerator(2, 0.5)).toStrictEqual([
-        [bomb, bomb],
-        [empty, empty],
-      ]);
-      expect(fieldGenerator(4, 0.5)).toStrictEqual([
-        [bomb, bomb, bomb, bomb],
-        [bomb, bomb, bomb, bomb],
-        [empty, empty, empty, empty],
-        [empty, empty, empty, empty],
-      ]);
+      const field = fieldGenerator(2, 0.5);
+      const flatField = field.flat();
+
+      console.table(field);
+      console.table(flatField);
+
+      const cellsWithBombs = flatField.filter((cell) => cell === bomb);
+      const emptyCells = flatField.filter((cell) => cell === empty);
+
+      expect(cellsWithBombs).toHaveLength(2);
+      expect(emptyCells).toHaveLength(2);
     });
   });
 });
