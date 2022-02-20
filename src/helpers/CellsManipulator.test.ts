@@ -94,4 +94,68 @@ describe("Check increment Neibours", () => {
       ]);
     });
   });
+  describe("3x3 cases", () => {
+    it("Field 3x3 with one centered mine", () => {
+      expect(
+        incrementNeighbours(
+          [1, 1],
+          [
+            [empty, empty, empty],
+            [empty, bomb, empty],
+            [empty, empty, empty],
+          ]
+        )
+      ).toStrictEqual([
+        [1, 1, 1],
+        [1, bomb, 1],
+        [1, 1, 1],
+      ]);
+    });
+    it("Field 3x3 with two mines", () => {
+      expect(
+        incrementNeighbours(
+          [1, 1],
+          [
+            [0, 1, bomb],
+            [0, bomb, 1],
+            [0, 0, 0],
+          ]
+        )
+      ).toStrictEqual([
+        [1, 2, bomb],
+        [1, bomb, 2],
+        [1, 1, 1],
+      ]);
+    });
+  });
+  describe("9x9 cases", () => {
+    it("Field 9x9 with 7 mines", () => {
+      expect(
+        incrementNeighbours(
+          [5, 4],
+          [
+            [9, 2, 9, 1, 0, 0, 1, 1, 1],
+            [1, 2, 2, 2, 1, 0, 1, 9, 1],
+            [0, 0, 1, 9, 1, 0, 2, 2, 2],
+            [0, 0, 1, 1, 1, 0, 1, 9, 1],
+            [0, 1, 1, 1, 1, 9, 1, 1, 1],
+            [0, 1, 9, 2, 9, 1, 0, 0, 0],
+            [0, 2, 2, 3, 9, 1, 1, 1, 1],
+            [0, 1, 9, 2, 1, 1, 1, 9, 1],
+            [0, 1, 1, 1, 0, 0, 1, 1, 1],
+          ]
+        )
+      ).toStrictEqual([
+        [9, 2, 9, 1, 0, 0, 1, 1, 1],
+        [1, 2, 2, 2, 1, 0, 1, 9, 1],
+        [0, 0, 1, 9, 1, 0, 2, 2, 2],
+        [0, 0, 1, 1, 1, 0, 1, 9, 1],
+        [0, 1, 1, 2, 2, 9, 1, 1, 1],
+        [0, 1, 9, 3, 9, 2, 0, 0, 0],
+        [0, 2, 2, 4, 9, 2, 1, 1, 1],
+        [0, 1, 9, 2, 1, 1, 1, 9, 1],
+        [0, 1, 1, 1, 0, 0, 1, 1, 1],
+      ]);
+    });
+  });
 });

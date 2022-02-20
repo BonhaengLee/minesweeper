@@ -1,3 +1,5 @@
+import { incrementNeighbours } from "./CellsManipulator";
+
 export type Cell = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12;
 export type Field = Cell[][];
 export type Coords = [number, number];
@@ -33,6 +35,7 @@ export const fieldGenerator = (size: number, probability: number): Field => {
       // 지뢰가 남아있는 셀을 찾는다.
       if (restCellsWithBombs / unprocessedCells > Math.random()) {
         result[y][x] = CellState.bomb;
+        incrementNeighbours([y, x], result);
         restCellsWithBombs--;
       }
       unprocessedCells--;
