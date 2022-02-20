@@ -24,15 +24,21 @@ export const checkItemInField = (
 };
 
 export const incrementNeighbours = (coords: Coords, field: Field): Field => {
+  // we need to get all neighbours coords
   const items = getNeighboursItems(coords);
-
+  // and check if they are in field
   for (const item of Object.values(items)) {
+    const [y, x] = item;
+    const { length } = field;
+    console.log(item, checkItemInField(item, field), length - y, length - x);
     if (checkItemInField(item, field)) {
       const [y, x] = item;
       const cell = field[y][x];
-
-      field[y][x] = (cell + 1) as Cell;
+      if (cell < 8) {
+        field[y][x] = (cell + 1) as Cell;
+      }
     }
+    console.table(field);
   }
 
   return field;

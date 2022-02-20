@@ -85,12 +85,12 @@ describe("Check increment Neibours", () => {
           [0, 0],
           [
             [bomb, empty],
-            [empty, empty],
+            [empty, bomb],
           ]
         )
       ).toStrictEqual([
         [bomb, 1],
-        [1, 1],
+        [1, bomb],
       ]);
     });
   });
