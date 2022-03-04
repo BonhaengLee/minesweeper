@@ -1,7 +1,5 @@
 import { emptyFieldGenerator, CellState, fieldGenerator } from "./Field";
-
 const { empty, bomb, hidden } = CellState;
-
 const cellWithBombFilter = (cell: number) => cell === bomb;
 
 describe("Field Generator", () => {
